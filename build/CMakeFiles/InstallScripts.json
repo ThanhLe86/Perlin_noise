@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/run/media/jamele/DATA/projects/Dev/noise-implementation/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

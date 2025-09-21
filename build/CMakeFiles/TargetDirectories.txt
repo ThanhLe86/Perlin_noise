@@ -1,0 +1,3 @@
+/run/media/jamele/DATA/projects/Dev/noise-implementation/build/CMakeFiles/texture.dir
+/run/media/jamele/DATA/projects/Dev/noise-implementation/build/CMakeFiles/edit_cache.dir
+/run/media/jamele/DATA/projects/Dev/noise-implementation/build/CMakeFiles/rebuild_cache.dir
