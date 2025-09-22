@@ -5,9 +5,12 @@
 #include "pcg_random.hpp"
 
 //combining numbers experiment
-// Combining inoputs with fixed point rep
-uint32_t fixed_point_rep(uint32_t x, uint32_t y) {
-    return x | y;
+// Combining inoputs cause idk
+uint32_t max = 4294967295;
+
+uint32_t combine(uint32_t x, uint32_t y) {
+    uint32_t combined = (x * 1664525) ^ y;
+    return combined;
 }
 
 //Combining input with Cantor pairing
@@ -24,8 +27,13 @@ uint32_t hash(uint32_t seed){
     return digest;
 }
 
-float lerp (float val1, float val2, float fraction) { 
-    return static_cast<float>(hash(floor(val1))) + fraction * (hash(ceil(val1) - hash(floor(val2))));
+float lerp (float val1, float val2, float fraction) {   
+    uint32_t val1_ceil = static_cast<uint32_t>(ceil(val1));
+    uint32_t val1_floor = static_cast<uint32_t>(floor(val1));
+    uint32_t val2_floor = static_cast<uint32_t>(floor(val2));
+
+    //Float conversion to prevent integer division 
+    return static_cast<float>((float)hash(val1_floor) / max + fraction * ((float)hash(val1_ceil) / max - (float)hash(val2_floor) / max)); 
 }
 
 #endif  //!__MATH_UTILITY__H__
