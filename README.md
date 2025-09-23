@@ -10,3 +10,6 @@
 - The reason the RNG is called a hash in the implementation can be better explained here: [Hash Functions for GPU Rendering](https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/)
 
 - In order to generate a noise texture, we use CMake to turn what we need into a texture executable before funneling the output into an image.ppm file, which can then be viewed.
+
+### Process
+- We address each pixel individually with whole integer coordinates of (x, y), we then scale these coordinates to obtain floating point types with which we can use to generate random numbers using PCG RNG.
