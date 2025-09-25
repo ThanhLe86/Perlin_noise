@@ -14,8 +14,8 @@ int	main(int argc, char **argv)
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; i++) {
             //scaling coordinates, these values can be changed to your liking, lesser means more zoomed out, greater is the reversed
-            float x = (float)i / 5.0f; // important (*)
-            float y = (float)j / 5.0f;
+            float x = (float)i / 10.0f; // important (*)
+            float y = (float)j / 10.0f;
 
             uint32_t x_floor = static_cast<uint32_t>(floor(x));
             uint32_t x_ceil = static_cast<uint32_t>(ceil(x));
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
             float n11 = (float)hash(combine(x_ceil, y_ceil)) / max_int;
 
             //bilinear interpolation
-            float biline_lerp = lerp(lerp(n00, n01, x - x_floor), lerp(n01, n11, x - x_floor), y - y_floor);
+            float biline_lerp = lerp(lerp(n00, n10, x - x_floor), lerp(n01, n11, x - x_floor), y - y_floor);
             float rgbscore = biline_lerp * 256;
 
             std::cout << rgbscore << " " << rgbscore << " " << rgbscore << " " << '\n';

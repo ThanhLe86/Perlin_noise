@@ -9,8 +9,9 @@
 uint32_t max = 4294967295;
 
 uint32_t combine(uint32_t x, uint32_t y) {
-    uint32_t combined = (x * 1664525) ^ y;
-    return combined;
+    // uint32_t combined = (x * 1664525) ^ y;
+    // return combined;
+    return (x << 16) | (y & 0xFFFF);
 }
 
 //Combining input with Cantor pairing
@@ -28,12 +29,8 @@ uint32_t hash(uint32_t seed){
 }
 
 float lerp (float val1, float val2, float fraction) {   
-    uint32_t val1_ceil = static_cast<uint32_t>(ceil(val1));
-    uint32_t val1_floor = static_cast<uint32_t>(floor(val1));
-    uint32_t val2_floor = static_cast<uint32_t>(floor(val2));
-
     //Float conversion to prevent integer division 
-    return static_cast<float>((float)hash(val1_floor) / max + fraction * ((float)hash(val1_ceil) / max - (float)hash(val2_floor) / max)); 
+    return (val1 + fraction * ((val2  - val1))); 
 }
 
 #endif  //!__MATH_UTILITY__H__
