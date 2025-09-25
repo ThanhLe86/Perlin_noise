@@ -7,9 +7,16 @@
 
 - In order to generate good noise textures, we need a good source of RNG, for this we utilize the PCG hash. PCG (Permuted Congruential Generator) hash functions are a family of pseudorandom number generators that offer an excellent balance of speed and statistical quality. They are particularly popular in applications like video games and computer graphics for procedural generation.
 
-- The reason the RNG is called a hash in the implementation can be better explained here: [Hash Functions for GPU Rendering](https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/)
+- The reason the RNG of PCG is called a hash in the implementation can be better explained here: [Hash Functions for GPU Rendering](https://www.reedbeta.com/blog/hash-functions-for-gpu-rendering/). The difference in semantics can be summed up to just for convenience, as this RNG is pseudorandom and, therefore, deterministic. The same input will always give the same output.
 
 - In order to generate a noise texture, we use CMake to turn what we need into a texture executable before funneling the output into an image.ppm file, which can then be viewed.
 
 ### Process
 - We address each pixel individually with whole integer coordinates of (x, y), we then scale these coordinates to obtain floating point types with which we can use to generate random numbers using PCG RNG.
+
+- In order to reproduce the smooth transitions characteristic of value noise, two approaches are used:
+    + Linear interpolation: This is to determine the value in between two other values. Since PCG only works with floating point numbers, we determine the fractional number in between 2 integers by interpolating with the below formula. This is often referred to in graphics as "lerp":
+
+    noise(x) = hash($\lfloor x \rfloor$) + (x - $\lfloor x \rfloor$) * hash($\lceil x \rceil$) - hash($\lfloor x \rfloor$)
+
+    + Smoothstep functions:
