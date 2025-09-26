@@ -21,8 +21,11 @@
 
     + Smoothstep functions: The smoothstep function is a common tool in computer graphics for generating a smooth Hermite interpolation between two values, typically 0 and 1. It is characterized by the equation below:
     
-    smoothstep(x) = $3x^2$ - $2x^3$
+    f(x) = $3x^2$ - $2x^3$
 
-         smoothstep's key feature is that its rate of change (slope or first derivative) is zero at both its start and end points. This prevents abrupt changes, ensuring a gentle "ease-in" and "ease-out."
+    -> Thesmoothstep's key feature is that its rate of change (slope or first derivative) is zero at both its start and end points. This prevents abrupt changes, ensuring a gentle "ease-in" and "ease-out."
+
+    ![before](./illus/image.png)
+    ![alt text](./illus/image-2.png)
 
 
