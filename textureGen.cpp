@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
             float biline_lerp = lerp(lerp(n00, n10, x - x_floor), lerp(n01, n11, x - x_floor), y - y_floor);
             float rgbscore = biline_lerp * 256;
 
-            std::cout << rgbscore << " " << rgbscore << " " << rgbscore << " " << '\n';
+            std::cout << rgbscore << " " << rgbscore << " "  << rgbscore << '\n';
         }
     }
 
