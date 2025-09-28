@@ -2,6 +2,8 @@
 #define __MATH_UTILITY__H__
 #include <cstdint>
 #include <cmath>
+#include <cstdlib>
+#include <random>
 #include "pcg_random.hpp"
 
 //combining numbers experiment
@@ -12,14 +14,6 @@ uint32_t combine(uint32_t x, uint32_t y) {
     // uint32_t combined = (x * 1664525) ^ y;
     // return combined;
     return (x << 16) | (y & 0xFFFF);
-}
-
-//Combining input with Cantor pairing
-uint32_t Cantor_pairing(float x, float y) {
-    uint32_t x_int = static_cast<uint32_t>(x * 65536.0f);
-    uint32_t y_int = static_cast<uint32_t>(y * 65536.0f);
-    return 1/2 * (x_int + y_int) * (x_int + y_int + 1) + y_int;
-    
 }
 
 uint32_t hash(uint32_t seed){
@@ -36,5 +30,20 @@ float lerp (float val1, float val2, float fraction) {
 float easing(float x) {
     return (3 * pow(x, 2) - 2 * pow(x, 3));
 }
+
+inline uint32_t random_uint(){
+    pcg32 rng(pcg_extras::seed_seq_from<std::random_device>{});
+    uint32_t rand_res = rng(max);
+    return rand_res;
+}
+
+inline uint32_t random_uint(int min, int max){
+    uint32_t rand_num = random_uint();
+    float rand_scaled = static_cast<float> (rand_num) / max;
+
+    //??
+    return min + (max - min)*rand_scaled;
+}
+
 
 #endif  //!__MATH_UTILITY__H__
