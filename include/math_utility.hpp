@@ -34,7 +34,7 @@ float lerp (float val1, float val2, float fraction) {
 }
 
 float easing(float x) {
-    return 3 * pow(x, 2) - 2 * pow(x, 3);
+    return (3 * pow(x, 2) - 2 * pow(x, 3));
 }
 
 #endif  //!__MATH_UTILITY__H__

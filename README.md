@@ -28,4 +28,15 @@
     ![before](./illus/image.png)
     ![alt text](./illus/image-2.png)
 
+### Result:
+**The final result produces a grayscale texture that illustrates the value noise:**
+
+![alt text](./illus/raw_lerp.png)
+
+The blending between extreme values can be seen with every black spot transitioning to white gradually, this can be improved with the smoothstep function
+
+![alt text](./illus/smoothstep_lerp.png)
+
+
+
 
