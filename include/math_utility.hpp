@@ -37,12 +37,11 @@ inline uint32_t random_uint(){
     return rand_res;
 }
 
-inline uint32_t random_uint(int min, int max){
+inline float random_float(int min, int max){
     uint32_t rand_num = random_uint();
-    float rand_scaled = static_cast<float> (rand_num) / max;
+    float rand_scaled = (static_cast<float> (rand_num)) / ::max; // address global variable (scope resolution)
 
-    //??
-    return min + (max - min)*rand_scaled;
+    return min + (max - min)*rand_scaled;;
 }
 
 
