@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <random>
 #include "pcg_random.hpp"
+#include "vec2.hpp"
 
 //combining numbers experiment
 // Combining inoputs cause idk
@@ -31,17 +32,18 @@ float easing(float x) {
     return (3 * pow(x, 2) - 2 * pow(x, 3));
 }
 
-inline uint32_t random_uint(){
-    pcg32 rng(pcg_extras::seed_seq_from<std::random_device>{});
-    uint32_t rand_res = rng(max);
-    return rand_res;
-}
-
-inline float random_float(int min, int max){
-    uint32_t rand_num = random_uint();
+inline float random_float(int min, int max, uint32_t seed){
+    uint32_t rand_num = hash(seed);
     float rand_scaled = (static_cast<float> (rand_num)) / ::max; // address global variable (scope resolution)
 
     return min + (max - min)*rand_scaled;;
+}
+
+inline float random_float(uint32_t seed){
+    uint32_t rand_num = hash(seed);
+    float rand_scaled = (static_cast<float> (rand_num)) / ::max; // address global variable (scope resolution)
+
+    return (-1 + 2*rand_scaled);
 }
 
 
