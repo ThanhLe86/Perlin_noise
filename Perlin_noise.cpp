@@ -14,8 +14,8 @@ int	main(int argc, char **argv)
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; i++) {
             //scaling coordinates, these values can be changed to your liking, lesser means more zoomed out, greater is the reversed
-            float x = (float)i / 15.0f; // important (*)
-            float y = (float)j / 15.0f;
+            float x = (float)i / 1.5f; // important (*)
+            float y = (float)j / 1.50f;
 
             uint32_t x_floor = static_cast<uint32_t>(floor(x));
             uint32_t x_ceil = static_cast<uint32_t>(ceil(x));
@@ -32,8 +32,17 @@ int	main(int argc, char **argv)
             vec2 d00 = vec2(x - x_floor, y - y_floor);
             vec2 d01 = vec2(x - x_floor, y - y_ceil);
             vec2 d10 = vec2(x - x_ceil, y - y_floor);
-            vec2 d00 = vec2(x - x_ceil, y - y_ceil);
+            vec2 d11 = vec2(x - x_ceil, y - y_ceil);
 
+            float dot00 = dot(g00, d00);
+            float dot01 = dot(g01, d01);
+            float dot10 = dot(g10, d10);
+            float dot11 = dot(g11, d11);
+
+            //bilinearly interpolate
+            float rgb_score = lerp(lerp(dot00, dot10, x - x_floor), lerp(dot01, dot11, x - x_floor), y - y_floor);
+            rgb_score = ((rgb_score + 1) / 2) * 256; //scale values to [0; 1] 
+            std::cout << rgb_score << " " << rgb_score << " " << rgb_score << "\n";
 
             
         }
