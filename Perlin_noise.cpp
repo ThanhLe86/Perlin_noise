@@ -6,6 +6,8 @@ int	main(int argc, char **argv)
     int image_height = 400;
     int image_width = 800;
     uint32_t max_int = 4294967295;
+    float mapping[2][8] = {{1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 0.0, 0.0}, {1.0, 1.0, -1.0, -1.0, 0.0, 0.0, 1.0, -1.0}};
+
 
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
@@ -23,10 +25,17 @@ int	main(int argc, char **argv)
             uint32_t y_ceil = static_cast<uint32_t>(ceil(y));
 
             //gradient vectors
-            vec2 g00 = vec2(random_float(x_floor), random_float(y_floor));
-            vec2 g01 = vec2(random_float(x_floor), random_float(y_ceil));
-            vec2 g10 = vec2(random_float(x_ceil), random_float(y_floor));
-            vec2 g11 = vec2(random_float(x_ceil), random_float(y_ceil));
+            int o00 = hash(combine(x_floor, y_floor)) % 8;
+            int o01 = hash(combine(x_floor, y_ceil)) % 8;
+            int o10 = hash(combine(x_ceil, y_floor)) % 8;
+            int o11 = hash(combine(x_ceil, y_ceil)) % 8;
+
+
+            //mapping the results to predefined coordinates => gradient vectors
+            vec2 g00 = vec2(mapping[0][o00], mapping[1][o00]);
+            vec2 g01 = vec2(mapping[0][o01], mapping[1][o01]);
+            vec2 g10 = vec2(mapping[0][o10], mapping[1][o10]);
+            vec2 g11 = vec2(mapping[0][o11], mapping[1][o11]);
 
             //direction vectors
             vec2 d00 = vec2(x - x_floor, y - y_floor);
