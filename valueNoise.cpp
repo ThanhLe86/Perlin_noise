@@ -28,10 +28,16 @@ int	main(int argc, char **argv)
             float n10 = (float)hash(combine(x_ceil, y_floor))/ max_int;
             float n11 = (float)hash(combine(x_ceil, y_ceil)) / max_int;
 
+            //easing for fractional parts
+            float x_fract = easing(x - x_floor);
+            float y_fract = easing(y - y_floor); 
+
             //bilinear interpolation
-            float biline_lerp = lerp(lerp(n00, n10, x - x_floor), lerp(n01, n11, x - x_floor), y - y_floor);
-            float eased_score = easing(biline_lerp);
-            float rgbscore = eased_score * 256;
+            float biline_lerp = lerp(lerp(n00, n10, x_fract), lerp(n01, n11, x_fract), y_fract);
+            // float eased_score = easing(biline_lerp);
+            // float rgbscore = eased_score * 256;
+            
+            float rgbscore = biline_lerp * 256;
 
             std::cout << rgbscore << " " << rgbscore << " "  << rgbscore << '\n';
         }

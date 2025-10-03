@@ -35,7 +35,14 @@
 
 The blending between extreme values can be seen with every black spot transitioning to white gradually, this can be improved with the smoothstep function
 
+![alt text](./illus/smoothstep_lerp_correction.png)
+
+
+## Introspection
+- Due to a misunderstanding in how the process works, I ended up applying the smoothstep function to the final noise result after the lerping process instead of the fractional part of each of the coordinate. The original resulting texture ended up looking like this, which I wasn't able to recognize was wrong:
+
 ![alt text](./illus/smoothstep_lerp.png)
+
 
 
 
