@@ -32,6 +32,11 @@ float easing(float x) {
     return (3 * pow(x, 2) - 2 * pow(x, 3));
 }
 
+float smootherstep(float x_frac) {
+    float x_weight = 6*pow(x_frac, 5) - 15*pow(x_frac, 4) + 10*pow(x_frac, 3);
+    return x_weight;
+}
+
 inline float random_float(int min, int max, uint32_t seed){
     uint32_t rand_num = hash(seed);
     float rand_scaled = (static_cast<float> (rand_num)) / ::max; // address global variable (scope resolution)

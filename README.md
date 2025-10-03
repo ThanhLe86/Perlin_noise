@@ -37,12 +37,34 @@ The blending between extreme values can be seen with every black spot transition
 
 ![alt text](./illus/smoothstep_lerp_correction.png)
 
+### What is Perlin noise
+- Perlin noise is a gradient noise function developed by Ken Perlin in 1983. It's widely used in computer graphics and procedural content generation to create natural-looking, organic, or random textures, landscapes, and patterns. Unlike truly random noise, such as static, Perlin noise generates values that change smoothly across space. This means that nearby points will have similar noise values, which is key to producing the common "cloudy," "marbled," or "terrain-like" visual effects . It's a fundamental tool in simulating natural phenomena like smoke, fire, water, and complex terrains efficiently.
+
+- The primary advantage of Perlin noise is its controllable pseudo-randomness. While appearing random, the output is deterministic; the same input coordinates will always produce the same noise value. This consistency is crucial for generating repeatable textures in games and visual effects. The smoothness and continuity of the noise are inherent to its design, which involves interpolating between a grid of random gradient vectors. This mathematical process avoids sharp discontinuities, resulting in the characteristic fluid appearance that makes it so useful for simulating organic systems.
+
+- Perlin noise can be generated in any number of dimensions, though it's most commonly used in two dimensions (for 2D textures) or three dimensions (for 3D textures or volumes). Furthermore, complex, detailed patterns are often created by combining multiple layers of Perlin noise, each at a different frequency and amplitude. These combined layers are called octaves, and summing them up creates fractal noise or FBM (Fractional Brownian Motion), which provides the rich, detailed complexity seen in realistic virtual landscapes and materials.
+
+### Process
+- The computation of Perlin noise generally involves a three-step process. First, an invisible grid is established over the space, and at each grid intersection (lattice point), a fixed, pseudo-random gradient vector is assigned. Second, for any point P within a grid cell, the distance vectors from P to the surrounding lattice points are calculated. Third, the dot product is computed between each distance vector and the respective lattice point's gradient vector, yielding a set of scalar values.
+
+- There is also a step in the middle where the fractional values are passed into an easing function to prevent harsh transitions. Without this step, the resulting texture has an overlapping grid-like pattern.
+
+### Result
+**The final result produces a grayscale texture that illustrates the Perlin noise:**
+![alt text](./illus/Perlin_final.png)
+
+**Here is the result without the easing function:**
+![alt text](./illus/Perlin_raw.png)
+
+### The directional artifact issue
+- Even with modern variations like Simplex noise (which addresses some of the artifacts), directional artifacts—a subtle grid-like bias in the resulting texture—are an inherent limitation of Perlin noise, regardless of the specific interpolation or gradient selection method used. These artifacts arise because the noise function is fundamentally based on a regular, underlying lattice (square or cubic grid) where the gradient vectors are fixed. When the noise is generated or "sampled" along directions perfectly aligned with or at 45∘ angles to this grid, the interpolation process can slightly favor those directions, creating a visual "ringing" or "stretching"  along the axes. While careful gradient selection and the use of smoother kernel functions minimize the visual impact, the geometric constraint of the underlying regular grid means that perfect rotational isotropy (where the texture looks the same regardless of orientation) is mathematically impossible to achieve with the Perlin algorithm's core structure.
 
 ## Introspection
 - Due to a misunderstanding in how the process works, I ended up applying the smoothstep function to the final noise result after the lerping process instead of the fractional part of each of the coordinate. The original resulting texture ended up looking like this, which I wasn't able to recognize was wrong:
 
 ![alt text](./illus/smoothstep_lerp.png)
 
+- This mistake was detected after observing abnormalities in the generated Perlin noise texture after smoothing
 
 
 
